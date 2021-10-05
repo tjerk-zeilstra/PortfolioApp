@@ -6,29 +6,27 @@ using System.Threading.Tasks;
 
 namespace Logic.Models
 {
-    public class Gebruiker : IGebruiker
+    public class Expertise : IExpertise
     {
-
-        private int _gebruikerID;
-        private string _naam;
+        private int _id;
+        private string _name;
         private string _beschrijving;
-        private string _email;
 
-
-        public int GebruikerID
+        public int ID
         {
-            get { return _gebruikerID; }
+            get { return _id; }
             set
             {
-                _gebruikerID = value;
+                _id = value;
             }
+
         }
-        public string Naam
+        public string Name
         {
-            get { return _naam; }
+            get { return _name; }
             set
             {
-                _naam = value;
+                _name = value;
             }
         }
         public string Beschrijving
@@ -37,14 +35,6 @@ namespace Logic.Models
             set
             {
                 _beschrijving = value;
-            }
-        }
-        public string Email
-        {
-            get { return _email; }
-            set
-            {
-                _email = value;
             }
         }
     }

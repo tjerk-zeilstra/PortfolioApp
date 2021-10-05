@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logic.Models
 {
-    public class Project
+    public class Project : IProject
     {
         private int _projectID;
         private int _projectEigenaarID;
@@ -15,7 +15,7 @@ namespace Logic.Models
         private string _projectBeschrijving;
         private DateTime _projectDatum;
 
-        public int ProjectID { get { return _projectID; }  set { _projectID = value; } }
+        public int ProjectID { get { return _projectID; } set { _projectID = value; } }
         public int GebruikerID { get { return _projectEigenaarID; } set { _projectEigenaarID = value; } }
         public List<Gebruiker> Contributers { get { return _contributers; } set { _contributers = value; } }
         public string ProjectNaam { get { return _projectNaam; } set { _projectNaam = value; } }

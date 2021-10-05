@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic.Containers
+namespace Logic.Logic
 {
-    public class GebruikerContainer
+    public class GebruikerLogic
     {
+
     }
 }
