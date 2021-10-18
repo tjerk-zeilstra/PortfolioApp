@@ -14,8 +14,10 @@ namespace DAL
         public static string ConString(IConfigurationBuilder configurationBuilder)
         {
             string path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
-            configurationBuilder.AddJsonFile(path);
-            return string.Empty;
+            configurationBuilder.AddJsonFile(path, false);
+            var root = configurationBuilder.Build();
+            var appSettings = root.GetSection("ConnectionStrings:DefaultConnection");
+            return appSettings.Value;
         }
     }
 }

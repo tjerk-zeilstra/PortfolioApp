@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortfolioApp", "PortfolioApp\PortfolioApp.csproj", "{5EF31BAE-DE56-4AD4-A064-95B255C6D8A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{31AEE398-E174-4FCD-B38B-1B2B747D9BB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Logic\Logic.csproj", "{31AEE398-E174-4FCD-B38B-1B2B747D9BB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{CB4DA5FE-B5EE-4D8C-8509-201EBCAA0F9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{CB4DA5FE-B5EE-4D8C-8509-201EBCAA0F9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioTest", "PortfolioTest\PortfolioTest.csproj", "{5934F535-B556-4A7C-B02B-C9F38F838889}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortfolioTest", "PortfolioTest\PortfolioTest.csproj", "{5934F535-B556-4A7C-B02B-C9F38F838889}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioConsole", "PortfolioConsole\PortfolioConsole.csproj", "{6AD7E01F-30F5-4540-BDA8-E184E19FF56B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{5934F535-B556-4A7C-B02B-C9F38F838889}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5934F535-B556-4A7C-B02B-C9F38F838889}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5934F535-B556-4A7C-B02B-C9F38F838889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AD7E01F-30F5-4540-BDA8-E184E19FF56B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AD7E01F-30F5-4540-BDA8-E184E19FF56B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AD7E01F-30F5-4540-BDA8-E184E19FF56B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AD7E01F-30F5-4540-BDA8-E184E19FF56B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
