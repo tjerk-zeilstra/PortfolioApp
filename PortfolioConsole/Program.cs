@@ -1,5 +1,6 @@
 ﻿using System;
 using DAL;
+using Microsoft.Extensions.Configuration;
 
 namespace PortfolioConsole
 {
@@ -7,8 +8,8 @@ namespace PortfolioConsole
     {
         static void Main(string[] args)
         {
-            Context context = new Context();
-            context.execquery("select * from Gebruiker;");
+            
+            Console.WriteLine(Helper.ConString(new ConfigurationBuilder()));
             Console.ReadLine();
 
         }

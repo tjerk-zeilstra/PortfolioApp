@@ -1,6 +1,6 @@
-﻿namespace Logic.Models
+﻿namespace DAL.DTO
 {
-    public interface IGebruiker
+    public interface IGebruikerDTO
     {
         string Beschrijving { get; set; }
         string Email { get; set; }

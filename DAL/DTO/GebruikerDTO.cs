@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic.Models
+namespace DAL.DTO
 {
-    public class Gebruiker : IGebruiker
+    public class GebruikerDTO : IGebruikerDTO
     {
         private int _gebruikerID;
         private string _naam;
