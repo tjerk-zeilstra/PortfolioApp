@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using DAL.DTO;
 
-namespace Logic.Models
+namespace DAL.Interface
 {
-    public interface IProject
+    public interface IProjectDTO
     {
-        List<Gebruiker> Persoonen { get; set; }
         int GebruikerID { get; set; }
         string ProjectBeschrijving { get; set; }
         DateTime ProjectDatum { get; set; }

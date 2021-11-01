@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.DTO;
+using DAL.Interface;
 
 namespace DAL
 {
     public class Context
     {
-        private string _constring;
+        private readonly string _constring;
 
         public Context(IConfigurationBuilder configurationBuilder)
         {
@@ -23,12 +24,14 @@ namespace DAL
         {
             _constring = constring;
         }
-        public IList<IGebruikerDTO> GetPersons(string query)
+
+        public List<IGebruikerDTO> GetGebruikers(string query)
         {
+            //TODO dependency injection
             IList<IGebruikerDTO> retunlist = new List<IGebruikerDTO>();
-            using (SqlConnection connection = new SqlConnection(_constring))
+            using (SqlConnection connection = new(_constring))
             {
-                SqlCommand command = new SqlCommand(query, connection);
+                SqlCommand command = new(query, connection);
                 command.Connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
@@ -45,7 +48,33 @@ namespace DAL
                     }
                 }
             }
-            return retunlist;
+            return (List<IGebruikerDTO>)retunlist;
+        }
+
+        public List<IProjectDTO> GetProjecten(string query)
+        {
+            //TODO dependency injection
+            IList<IProjectDTO> retunlist = new List<IProjectDTO>();
+            using (SqlConnection connection = new(_constring))
+            {
+                SqlCommand command = new(query, connection);
+                command.Connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        retunlist.Add(new ProjectDTO
+                        {
+                            ProjectID = Convert.ToInt32(reader["ID"]),
+                            GebruikerID = Convert.ToInt32(reader["ProjectEigenaar"]),
+                            ProjectNaam = reader[""].ToString(),
+                            ProjectBeschrijving = reader[""].ToString(),
+                            ProjectDatum = Convert.ToDateTime(reader[""]),
+                        });
+                    }
+                }
+            }
+            return (List<IProjectDTO>)retunlist;
         }
         
     }

@@ -1,4 +1,4 @@
-﻿namespace DAL.DTO
+﻿namespace DAL.Interface
 {
     public interface IGebruikerDTO
     {
