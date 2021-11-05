@@ -16,18 +16,30 @@ namespace DAL.DAO
         {
             _connection = new SqlConnection(constring);
         }
-        public void AddGebruiker(GebruikerDTO gebruiker)
+
+        public GebruikerDTO AddGebruiker(GebruikerDTO gebruiker)
         {
             using (_connection)
             {
-                SqlCommand command = new("INSERT [dbo].[Gebruiker] ([Naam], [Email], [Beschrijving], [ProfielFoto]) VALUES (@Naam, @Email, @Beschrijving, @ProfielFoto)", _connection);
+                SqlCommand command = new("INSERT [dbo].[Gebruiker] ([Naam], [Email], [Beschrijving], [ProfielFoto]) VALUES (@Naam, @Email, @Beschrijving, @ProfielFoto); " + "SELECT CAST(scope_identity() AS int)", _connection);
                 command.Parameters.AddWithValue("@Naam", gebruiker.Naam);
-                command.Parameters.AddWithValue("@Email", gebruiker.Naam);
-                command.Parameters.AddWithValue("@Beschrijving", gebruiker.Naam);
-                command.Parameters.AddWithValue("@ProfielFoto", gebruiker.Naam);
+                command.Parameters.AddWithValue("@Email", gebruiker.Email);
+                command.Parameters.AddWithValue("@Beschrijving", gebruiker.Beschrijving);
+                if (gebruiker.ProfielFoto != null)
+                {
+                    command.Parameters.AddWithValue("@ProfielFoto", gebruiker.ProfielFoto);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@ProfielFoto", "Img/default_img.png");
+                }
+                
                 _connection.Open();
-                command.ExecuteNonQuery();
+                var modified = command.ExecuteScalar();
+                gebruiker.GebruikerID = (int)modified;
             }
+
+            return gebruiker;
         }
 
         public void DeleteGebruiker(GebruikerDTO gebruiker)
@@ -41,7 +53,7 @@ namespace DAL.DAO
             }
         }
 
-        public void EditGebruiker(GebruikerDTO gebruiker)
+        public GebruikerDTO EditGebruiker(GebruikerDTO gebruiker)
         {
             using (_connection)
             {
@@ -50,6 +62,8 @@ namespace DAL.DAO
                 _connection.Open();
                 command.ExecuteNonQuery();
             }
+
+            return gebruiker;
         }
 
         public IList<GebruikerDTO> GetAllGebruikers()
@@ -75,6 +89,29 @@ namespace DAL.DAO
                 }
             }
             return gebruikers;
+        }
+
+        public GebruikerDTO GetGebruiker(int id)
+        {
+            GebruikerDTO gebruiker = new();
+            using (SqlCommand command = new("SELECT * FROM Gebruiker WHERE [ID] = @id", _connection))
+            {
+                command.Parameters.AddWithValue("@id", id);
+                command.Connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        gebruiker.GebruikerID = Convert.ToInt32(reader["ID"]);
+                        gebruiker.Beschrijving = reader["Beschrijving"].ToString();
+                        gebruiker.Email = reader["Email"].ToString();
+                        gebruiker.Naam = reader["Naam"].ToString();
+                        gebruiker.ProfielFoto = reader["ProfielFoto"].ToString();
+                    }
+                }
+            }
+            return gebruiker;
         }
     }
 }

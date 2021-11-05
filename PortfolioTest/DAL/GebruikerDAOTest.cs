@@ -2,7 +2,6 @@
 using DAL.DAO;
 using DAOInterface.DTOs;
 using DAOInterface.Interface;
-using DAL.Interface;
 using System.Collections.Generic;
 
 
@@ -11,20 +10,57 @@ namespace PortfolioTest.DAL
     [TestClass]
     public class GebruikerDAOTest
     {
-        private readonly string _connstring = "Server=DESKTOP-N7U3HV7;Database=portfolioDB;Trusted_Connection=True;";
+        private GebruikerDAO _gebruikerDAO;
+        private readonly string _connstring;
+        public GebruikerDAOTest()
+        {
+            _connstring = "Server=DESKTOP-N7U3HV7;Database=portfolioDB_Test;Trusted_Connection=True;";
+            _gebruikerDAO = new GebruikerDAO(_connstring);
+        }
 
         [TestMethod]
         public void Get_All_Gebruikers_Test()
         {
             //arrange
-            GebruikerDAO gebruikerDAO = new GebruikerDAO(_connstring);
 
             //act
-            List<GebruikerDTO> gebruikers = (List<GebruikerDTO>)gebruikerDAO.GetAllGebruikers();
+            List<GebruikerDTO> gebruikers = (List<GebruikerDTO>)_gebruikerDAO.GetAllGebruikers();
 
             //assert
             Assert.IsNotNull(gebruikers);
             CollectionAssert.AllItemsAreNotNull(gebruikers);
         }
+
+        [TestMethod]
+        public void Get_Gebruiker_Test()
+        {
+            //arrange
+            int gebruikerID = 1;
+
+            //act
+            GebruikerDTO gebruiker = _gebruikerDAO.GetGebruiker(gebruikerID);
+
+            //assert
+            Assert.AreEqual(gebruiker.GebruikerID, gebruikerID);
+        }
+
+        [TestMethod]
+        public void Add_Gebruiker_Test()
+        {
+            //arrange
+            GebruikerDTO gebruiker = new() {
+                Beschrijving = "Test beschrijving",
+                Naam = "Test naam",
+                Email = "Test mail",
+                ProfielFoto = null
+            };
+
+            //act
+            gebruiker = _gebruikerDAO.AddGebruiker(gebruiker);
+
+            //assert
+            Assert.IsNotNull(gebruiker.GebruikerID);
+        }
+
     }
 }

@@ -6,36 +6,10 @@ using System.Threading.Tasks;
 
 namespace Logic.Models
 {
-    public class Expertise : IExpertise
+    public class Expertise
     {
-        private int _id;
-        private string _name;
-        private string _beschrijving;
-
-        public int ID
-        {
-            get { return _id; }
-            set
-            {
-                _id = value;
-            }
-
-        }
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-            }
-        }
-        public string Beschrijving
-        {
-            get { return _beschrijving; }
-            set
-            {
-                _beschrijving = value;
-            }
-        }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Beschrijving { get; set; }
     }
 }
