@@ -19,24 +19,28 @@ namespace DAL.DAO
 
         public GebruikerDTO AddGebruiker(GebruikerDTO gebruiker)
         {
+            string query = "INSERT [dbo].[Gebruiker] ([Naam], [Email], [Beschrijving], [ProfielFoto]) VALUES (@Naam, @Email, @Beschrijving, @ProfielFoto); " + "SELECT CAST(scope_identity() AS int)";
+
             using (_connection)
             {
-                SqlCommand command = new("INSERT [dbo].[Gebruiker] ([Naam], [Email], [Beschrijving], [ProfielFoto]) VALUES (@Naam, @Email, @Beschrijving, @ProfielFoto); " + "SELECT CAST(scope_identity() AS int)", _connection);
-                command.Parameters.AddWithValue("@Naam", gebruiker.Naam);
-                command.Parameters.AddWithValue("@Email", gebruiker.Email);
-                command.Parameters.AddWithValue("@Beschrijving", gebruiker.Beschrijving);
-                if (gebruiker.ProfielFoto != null)
+                using (SqlCommand command = new(query, _connection))
                 {
-                    command.Parameters.AddWithValue("@ProfielFoto", gebruiker.ProfielFoto);
+                    command.Parameters.AddWithValue("@Naam", gebruiker.Naam);
+                    command.Parameters.AddWithValue("@Email", gebruiker.Email);
+                    command.Parameters.AddWithValue("@Beschrijving", gebruiker.Beschrijving);
+                    if (gebruiker.ProfielFoto != null)
+                    {
+                        command.Parameters.AddWithValue("@ProfielFoto", gebruiker.ProfielFoto);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@ProfielFoto", "Img/default_img.png");
+                    }
+
+                    _connection.Open();
+                    var modified = command.ExecuteScalar();
+                    gebruiker.GebruikerID = (int)modified;
                 }
-                else
-                {
-                    command.Parameters.AddWithValue("@ProfielFoto", "Img/default_img.png");
-                }
-                
-                _connection.Open();
-                var modified = command.ExecuteScalar();
-                gebruiker.GebruikerID = (int)modified;
             }
 
             return gebruiker;

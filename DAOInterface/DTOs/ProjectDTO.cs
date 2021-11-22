@@ -8,5 +8,10 @@ namespace DAOInterface.DTOs
 {
     public class ProjectDTO
     {
+        public int ProjectID { get; set; }
+        public int GebruikerID { get; set; }
+        public string ProjectNaam { get; set; }
+        public string ProjectBeschrijving { get; set; }
+        public DateTime ProjectDatum { get; set; }
     }
 }

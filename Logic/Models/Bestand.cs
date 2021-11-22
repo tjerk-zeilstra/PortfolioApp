@@ -9,7 +9,6 @@ namespace Logic.Models
     public class Bestand
     {
         public int ID { get; set; }
-
         public string Locatie { get; set; }
     }
 }
