@@ -11,18 +11,15 @@ namespace Logic.Models
     public class Project
     {
         private readonly IProjectDAO _projectDAO;
-        private readonly IExpertiseDOA _expertiseDOA;
 
-        public Project(IProjectDAO projectDAO, IExpertiseDOA expertiseDOA)
+        public Project(IProjectDAO projectDAO)
         {
             _projectDAO = projectDAO;
-            _expertiseDOA = expertiseDOA;
         }
 
-        public List<Gebruiker> gebruikers;
-        public List<Expertise> expertises;
-        public List<ToDoItem> toDoItems;
-
+        public List<Gebruiker> Gebruikers { get; private set; }
+        public List<Expertise> Expertises { get; private set; }
+        public List<ToDoItem> ToDoItems { get; private set; }
         public int ProjectID { get; set; }
         public int GebruikerID { get; set; }
         public string ProjectNaam { get; set; }
@@ -41,13 +38,14 @@ namespace Logic.Models
             });
         }
 
+        //Project
         private void GetProjectGebruikers()
         {
-            List<GebruikerDTO> gebruikerDTOs = _projectDAO.GetProjectGebruikers(GebruikerID);
-            gebruikers.Clear();
+            List<GebruikerDTO> gebruikerDTOs = _projectDAO.GetProjectGebruikers(ProjectID);
+            Gebruikers.Clear();
             foreach (var gebDTO in gebruikerDTOs)
             {
-                gebruikers.Add(new()
+                Gebruikers.Add(new()
                 {
                     GebruikerID = gebDTO.GebruikerID,
                     Beschrijving = gebDTO.Beschrijving,
@@ -58,29 +56,30 @@ namespace Logic.Models
             }
         }
 
+        //Gebruikers
         private void AddGebruiker(Gebruiker gebruiker)
         {
-            _projectDAO.AddGebruiker(new()
-            {
-                GebruikerID = gebruiker.GebruikerID,
-                Beschrijving = gebruiker.Beschrijving,
-                Email = gebruiker.Email,
-                Naam = gebruiker.Naam,
-                ProfielFoto = gebruiker.ProfielFoto
-            });
-
-            gebruikers.Add(gebruiker);
+            _projectDAO.AddGebruiker(gebruiker.GebruikerID);
+            Gebruikers.Add(gebruiker);
         }
 
         private void RemoveGebruiker(Gebruiker gebruiker)
         {
             _projectDAO.RemoveGebruiker(gebruiker.GebruikerID, ProjectID);
-            gebruikers.Remove(gebruiker);
+            Gebruikers.Remove(gebruiker);
         }
 
-        private void GetProjectExpertise()
+        //Expertises
+        private void GetProjectExpertise(Expertise expertise)
         {
+            List<ExpertiseDTO> expertiseDTOs = _projectDAO.GetExpertises(ProjectID);
+            foreach (var expDTO in expertiseDTOs)
+            {
+                expertiseDTOs.Add(new()
+                {
 
+                });
+            }
         }
 
         private void GetProjectToDo()

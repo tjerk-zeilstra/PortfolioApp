@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Logic\" />
+    <Folder Include="FakeDAL\" />
   </ItemGroup>
 
 </Project>
