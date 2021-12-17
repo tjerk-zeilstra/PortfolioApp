@@ -17,6 +17,16 @@ namespace DAL.DAO
             _connectionstring = connnectionstring;
         }
 
+        public void AddExpertise(int expertiseID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddGebruiker(int gebruiker)
+        {
+            throw new NotImplementedException();
+        }
+
         public int CreateProject(ProjectDTO Project)
         {
             throw new NotImplementedException();
@@ -71,6 +81,11 @@ namespace DAL.DAO
             return projectDTOs;
         }
 
+        public List<ExpertiseDTO> GetExpertises(int projectID)
+        {
+            throw new NotImplementedException();
+        }
+
         public ProjectDTO GetProject(int projectID)
         {
             string query = "SELECT * FROM [dbo].[Project] WHERE [ID] = @id";
@@ -96,7 +111,22 @@ namespace DAL.DAO
             return projectDTO;
         }
 
+        public List<GebruikerDTO> GetProjectGebruikers(int projectID)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<ProjectDTO> GetProjectsFromUser(int userID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveExpertise(int expertiseID, int projectID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveGebruiker(int gebruikerID, int projectID)
         {
             throw new NotImplementedException();
         }

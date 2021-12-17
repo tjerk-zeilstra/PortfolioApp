@@ -1,18 +1,40 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using Logic.Logic;
 using Logic.Models;
 using DAOInterface.DTOs;
+using DAOInterface.Interface;
+using PortfolioTest.FakeDAL;
 
 namespace PortfolioTest.Logic
 {
     [TestClass]
-    class ProjectTest
+    public class ProjectTest
     {
-        [TestMethod]
-        public void EditProject()
-        {
+        IProjectDAO projectDAO;
+        Project project;
 
+        public ProjectTest()
+        {
+            projectDAO = new FakeProjectDAO();
+        }
+
+        [TestMethod]
+        public void TestUpdateProject()
+        {
+            //arange
+            string nieuwprojectnaam = "new project naam";
+
+            ProjectDTO projectDTO = new() { ProjectID = 1, GebruikerID = 1, ProjectNaam = "naam", ProjectBeschrijving = "naam", ProjectDatum = new() };
+
+            project = new Project(projectDAO, projectDTO);
+
+            project.ProjectNaam = nieuwprojectnaam;
+
+            //act
+            project.Update();
+
+            //assert
+            Assert.AreEqual(nieuwprojectnaam, project.ProjectNaam);
         }
     }
 }

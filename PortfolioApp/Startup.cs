@@ -1,3 +1,5 @@
+using DAOInterface.Interface;
+using DAL.DAO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,8 +25,13 @@ namespace PortfolioApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //TODO depenency injection
             services.AddControllersWithViews();
+
+            //depenency injection
+            services.AddSingleton<IProjectDAO, ProjectDAO>();
+            services.AddSingleton<IGebruikerDAO, GebruikerDAO>();
+            services.AddSingleton<IExpertiseDOA, ExpertiseDAO>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

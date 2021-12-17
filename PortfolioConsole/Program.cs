@@ -9,8 +9,7 @@ namespace PortfolioConsole
         static void Main(string[] args)
         {
             
-            Console.WriteLine(Helper.ConString(new ConfigurationBuilder()));
-            Console.ReadLine();
+            
 
         }
     }
