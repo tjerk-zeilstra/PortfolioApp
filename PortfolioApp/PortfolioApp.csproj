@@ -10,4 +10,12 @@
     <ProjectReference Include="..\Logic\Logic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Gebruiker\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+  </ItemGroup>
+
 </Project>
