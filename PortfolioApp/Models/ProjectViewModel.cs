@@ -23,15 +23,15 @@ namespace PortfolioApp.Models
             ProjectBeschrijving = project.ProjectBeschrijving;
             ProjectDatum = project.ProjectDatum;
 
-            foreach (var geb in project.Gebruikers)
-            {
-                Gebruikers.Add(new(geb));
-            }
+            //foreach (var geb in project.Gebruikers)
+            //{
+            //    Gebruikers.Add(new(geb));
+            //}
 
-            foreach (var exp in project.Expertises)
-            {
-                Expertises.Add(new(exp));
-            }
+            //foreach (var exp in project.Expertises)
+            //{
+            //    Expertises.Add(new(exp));
+            //}
         }
 
         public Project LogicProject { get; set; }

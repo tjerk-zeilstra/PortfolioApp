@@ -7,12 +7,12 @@ using DAOInterface.Interface;
 using Logic.Models;
 using DAOInterface.DTOs;
 
-namespace Logic.Controller
+namespace Logic.Managers
 {
-    public class ProjectController
+    public class ProjectManager
     {
         private readonly IProjectDAO _projectDAO;
-        public ProjectController(IProjectDAO projectDAO)
+        public ProjectManager(IProjectDAO projectDAO)
         {
             _projectDAO = projectDAO;
         }

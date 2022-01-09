@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Logic.Controller;
+using Logic.Managers;
 using PortfolioApp.Models;
 using DAOInterface.Interface;
 
@@ -12,22 +12,29 @@ namespace PortfolioApp.Controllers
 {
     public class ProjectController : Controller
     {
-        readonly Logic.Controller.ProjectController projectcontroller;
+        readonly ProjectManager projectManager;
         public ProjectController(IProjectDAO projectDAO)
         {
-            projectcontroller = new(projectDAO);
+            projectManager = new(projectDAO);
         }
 
         // GET: ProjectController
         public ActionResult Index()
         {
             List<ProjectViewModel> models = new();
-            foreach (var project in projectcontroller.GetAllProjects())
+            foreach (var project in projectManager.GetAllProjects())
             {
                 models.Add(new(project));
             }
             return View(models);
         }
+
+        //GET: ProjectController TODO later
+        //public ActionResult AccountPage()
+        //{
+        //    List<ProjectViewModel> models = new();
+        //    return View();
+        //}
 
         // GET: ProjectController/Details/5
         public ActionResult Details(int id)

@@ -12,9 +12,9 @@ namespace DAL.DAO
     public class GebruikerDAO : IGebruikerDAO
     {
         private readonly SqlConnection _connection;
-        public GebruikerDAO(string constring)
+        public GebruikerDAO()
         {
-            _connection = new SqlConnection(constring);
+            _connection = new SqlConnection("Server=DESKTOP-N7U3HV7;Database=portfolioDB_Test;Trusted_Connection=True;");
         }
 
         public GebruikerDTO AddGebruiker(GebruikerDTO gebruiker)

@@ -28,9 +28,13 @@ namespace PortfolioApp
             services.AddControllersWithViews();
 
             //depenency injection
-            services.AddSingleton<IProjectDAO, ProjectDAO>();
-            services.AddSingleton<IGebruikerDAO, GebruikerDAO>();
-            services.AddSingleton<IExpertiseDOA, ExpertiseDAO>();
+            //services.AddSingleton<IProjectDAO, ProjectDAO>();
+            services.AddScoped<IProjectDAO, ProjectDAO>();
+            //services.AddScoped(typeof(IProjectDAO), typeof(ProjectDAO));
+            services.AddScoped<IGebruikerDAO, GebruikerDAO>();
+            //services.AddScoped(typeof(IGebruikerDAO), typeof(GebruikerDAO));
+            services.AddScoped<IExpertiseDOA, ExpertiseDAO>();
+            //services.AddScoped(typeof(IExpertiseDOA), typeof(ExpertiseDAO));
 
         }
 

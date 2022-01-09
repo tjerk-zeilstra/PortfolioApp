@@ -11,10 +11,10 @@ namespace DAL.DAO
 {
     public class ProjectDAO : IProjectDAO
     {
-        private readonly string _connectionstring;
-        public ProjectDAO(string connnectionstring)
+        private readonly string _connection;
+        public ProjectDAO()
         {
-            _connectionstring = connnectionstring;
+            _connection = "Server=DESKTOP-N7U3HV7;Database=portfolio;Trusted_Connection=True;";
         }
 
         public void AddExpertise(int expertiseID)
@@ -36,7 +36,7 @@ namespace DAL.DAO
         {
             string query = "DELETE FROM [dbo].[Project] WHERE [ID] = @id";
 
-            using SqlConnection connection = new(_connectionstring);
+            using SqlConnection connection = new(_connection);
             using SqlCommand command = new(query, connection);
             command.Parameters.AddWithValue("@id", Project.ProjectID);
             command.ExecuteNonQuery();
@@ -46,7 +46,7 @@ namespace DAL.DAO
         {
             string query = "UPDATE [dbo].[Project] SET [ProjectEigenaar] = @eigenaar ,[Beschrijving] = @beschrijving ,[Naam] = @name ,[Datum] = @datum WHERE [ID] = @id";
 
-            using SqlConnection connection = new(_connectionstring);
+            using SqlConnection connection = new(_connection);
             using SqlCommand command = new(query, connection);
             command.Parameters.AddWithValue("@eigenaar", Project.GebruikerID);
             command.Parameters.AddWithValue("@beschrijving", Project.ProjectBeschrijving);
@@ -59,27 +59,41 @@ namespace DAL.DAO
 
         public List<ProjectDTO> GetAllProjecten()
         {
-            string query = "SELECT * FROM [dbo].[Project]";
+            string query = "SELECT * FROM dbo.Project";
 
             List<ProjectDTO> projectDTOs = new();
 
-            using SqlConnection connection = new(_connectionstring);
-            using SqlCommand command = new(query, connection);
-            using SqlDataReader dataReader = command.ExecuteReader();
-            while (dataReader.Read())
+            using (SqlConnection connection = new(_connection))
             {
-                projectDTOs.Add(new()
+                using (SqlCommand command = new(query, connection))
                 {
-                    ProjectID = (int)dataReader["ID"],
-                    GebruikerID = (int)dataReader["ProjectEigenaar"],
-                    ProjectBeschrijving = (string)dataReader["Beschrijving"],
-                    ProjectNaam = (string)dataReader["Naam"],
-                    ProjectDatum = (DateTime)dataReader["Datum"]
-                });
+                    command.Connection.Open();
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            projectDTOs.Add(new()
+                            {
+                                ProjectID = (int)dataReader["ID"],
+                                GebruikerID = (int)dataReader["ProjectEigenaar"],
+                                ProjectBeschrijving = (string)dataReader["Beschrijving"],
+                                ProjectNaam = (string)dataReader["Naam"],
+                                ProjectDatum = (DateTime)dataReader["Datum"]
+                            });
+                        }
+                    }
+                }
             }
-
             return projectDTOs;
         }
+
+        //public List<ProjectDTO> GetAllProjecten()
+        //{
+        //    string query = "SELECT * FROM dbo.Project";
+        //    List<ProjectDTO> projectDTOs = new();
+
+        //    using(SqlCommand reader = )
+        //}
 
         public List<ExpertiseDTO> GetExpertises(int projectID)
         {
@@ -92,7 +106,7 @@ namespace DAL.DAO
 
             ProjectDTO projectDTO = new();
 
-            using SqlConnection connection = new(_connectionstring);
+            using SqlConnection connection = new(_connection);
             using SqlCommand command = new(query, connection);
             command.Parameters.AddWithValue("@id", projectID);
             using SqlDataReader dataReader = command.ExecuteReader();

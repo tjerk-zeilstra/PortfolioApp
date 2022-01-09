@@ -15,7 +15,7 @@ namespace PortfolioTest.DAL
         public GebruikerDAOTest()
         {
             _connstring = "Server=DESKTOP-N7U3HV7;Database=portfolioDB_Test;Trusted_Connection=True;";
-            _gebruikerDAO = new GebruikerDAO(_connstring);
+            _gebruikerDAO = new GebruikerDAO();
         }
 
         [TestMethod]
