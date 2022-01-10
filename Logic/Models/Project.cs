@@ -38,15 +38,19 @@ namespace Logic.Models
         public string ProjectBeschrijving { get; set; }
         public DateTime ProjectDatum { get; set; }
 
-        public void Update()
+        public void Update(int gebruiker, string naam, string beschrijving, DateTime datum)
         {
+            GebruikerID = gebruiker;
+            ProjectNaam = naam;
+            ProjectBeschrijving = beschrijving;
+            ProjectDatum = datum;
             _projectDAO.EditProject(new ProjectDTO()
             {
                 ProjectID = ProjectID,
-                GebruikerID = GebruikerID,
-                ProjectNaam = ProjectNaam,
-                ProjectBeschrijving = ProjectBeschrijving,
-                ProjectDatum = ProjectDatum
+                GebruikerID = gebruiker,
+                ProjectNaam = naam,
+                ProjectBeschrijving = beschrijving,
+                ProjectDatum = datum
             });
         }
 

@@ -20,9 +20,9 @@ namespace PortfolioTest.FakeDAL
             
         }
 
-        public int CreateProject(ProjectDTO Project)
+        public void CreateProject(ProjectDTO Project)
         {
-            return 1;
+            Project.ProjectID = 1;
         }
 
         public void DeleteProject(ProjectDTO Project)

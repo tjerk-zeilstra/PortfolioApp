@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Logic.Managers;
+using Logic.Models;
 using PortfolioApp.Models;
 using DAOInterface.Interface;
 
@@ -29,13 +30,6 @@ namespace PortfolioApp.Controllers
             return View(models);
         }
 
-        //GET: ProjectController TODO later
-        //public ActionResult AccountPage()
-        //{
-        //    List<ProjectViewModel> models = new();
-        //    return View();
-        //}
-
         // GET: ProjectController/Details/5
         public ActionResult Details(int id)
         {
@@ -52,11 +46,11 @@ namespace PortfolioApp.Controllers
         // POST: ProjectController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([FromForm]ProjectViewModel viewModel)
         {
             try
             {
-
+                projectManager.AddProject(viewModel.GebruikerID, viewModel.ProjectNaam, viewModel.ProjectBeschrijving, viewModel.ProjectDatum);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -68,16 +62,19 @@ namespace PortfolioApp.Controllers
         // GET: ProjectController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ProjectViewModel viewModel = new(projectManager.GetProject(id));
+            return View(viewModel);
         }
 
         // POST: ProjectController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, [FromForm]ProjectViewModel viewModel)
         {
             try
             {
+                Project project = projectManager.GetProject(id);
+                project.Update(viewModel.GebruikerID, viewModel.ProjectNaam, viewModel.ProjectBeschrijving, viewModel.ProjectDatum);
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -28,10 +28,8 @@ namespace PortfolioTest.Logic
 
             project = new Project(projectDAO, projectDTO);
 
-            project.ProjectNaam = nieuwprojectnaam;
-
             //act
-            project.Update();
+            project.Update(1, nieuwprojectnaam, "naam", project.ProjectDatum);
 
             //assert
             Assert.AreEqual(nieuwprojectnaam, project.ProjectNaam);

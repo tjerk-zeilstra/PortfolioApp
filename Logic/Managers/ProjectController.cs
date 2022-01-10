@@ -30,7 +30,15 @@ namespace Logic.Managers
 
         public Project GetProject(int id)
         {
-            return new(_projectDAO, _projectDAO.GetProject(id));
+            ProjectDTO projectDTO = _projectDAO.GetProject(id);
+            Project project = new(_projectDAO) {
+                ProjectID = projectDTO.ProjectID,
+                GebruikerID = projectDTO.GebruikerID,
+                ProjectNaam = projectDTO.ProjectNaam,
+                ProjectBeschrijving = projectDTO.ProjectBeschrijving,
+                ProjectDatum = projectDTO.ProjectDatum
+            };
+            return project;
         }
 
         public Project AddProject(int gebID, string naam, string beschrijving, DateTime datum)
@@ -45,7 +53,8 @@ namespace Logic.Managers
             _projectDAO.CreateProject(projectDTO);
             return new Project(_projectDAO) 
             { 
-                ProjectID = projectDTO.GebruikerID,
+                ProjectID = projectDTO.ProjectID,
+                GebruikerID = projectDTO.GebruikerID,
                 ProjectNaam = projectDTO.ProjectNaam,
                 ProjectBeschrijving = projectDTO.ProjectBeschrijving,
                 ProjectDatum = projectDTO.ProjectDatum

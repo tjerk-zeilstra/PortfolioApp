@@ -29,9 +29,9 @@ namespace DAL.DAO
 
         public void CreateProject(ProjectDTO project)
         {
-            string query = "INSERT INTO dbo.Project([ProjectEigenaar],[Beschrijving],[Naam],[Datum]) VALUES(@eigenaar, @beschrijving, @naam, @datum)";
+            string query = "INSERT INTO dbo.Project([ProjectEigenaar],[Beschrijving],[Naam],[Datum]) VALUES(@eigenaar, @beschrijving, @naam, @datum)" + "SELECT CAST(scope_identity() AS int)";
 
-            using(SqlConnection connection = new())
+            using(SqlConnection connection = new(_connection))
             {
                 using (SqlCommand command = new(query, connection))
                 {
@@ -61,15 +61,18 @@ namespace DAL.DAO
         {
             string query = "UPDATE [dbo].[Project] SET [ProjectEigenaar] = @eigenaar ,[Beschrijving] = @beschrijving ,[Naam] = @name ,[Datum] = @datum WHERE [ID] = @id";
 
-            using SqlConnection connection = new(_connection);
-            using SqlCommand command = new(query, connection);
-            command.Parameters.AddWithValue("@eigenaar", Project.GebruikerID);
-            command.Parameters.AddWithValue("@beschrijving", Project.ProjectBeschrijving);
-            command.Parameters.AddWithValue("@name", Project.ProjectNaam);
-            command.Parameters.AddWithValue("@datum", Project.ProjectDatum);
-            command.Parameters.AddWithValue("@id", Project.ProjectID);
+            using (SqlConnection connection = new(_connection))
+            {
+                using (SqlCommand command = new(query, connection)) { 
+                    command.Parameters.AddWithValue("@eigenaar", Project.GebruikerID);
+                    command.Parameters.AddWithValue("@beschrijving", Project.ProjectBeschrijving);
+                    command.Parameters.AddWithValue("@name", Project.ProjectNaam);
+                    command.Parameters.AddWithValue("@datum", Project.ProjectDatum);
+                    command.Parameters.AddWithValue("@id", Project.ProjectID);
 
-            command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
         public List<ProjectDTO> GetAllProjecten()
@@ -113,20 +116,27 @@ namespace DAL.DAO
 
             ProjectDTO projectDTO = new();
 
-            using SqlConnection connection = new(_connection);
-            using SqlCommand command = new(query, connection);
-            command.Parameters.AddWithValue("@id", projectID);
-            using SqlDataReader dataReader = command.ExecuteReader();
-            while (dataReader.Read())
+            using (SqlConnection connection = new(_connection))
             {
-                projectDTO = new()
+                using (SqlCommand command = new(query, connection))
                 {
-                    ProjectID = (int)dataReader["ID"],
-                    GebruikerID = (int)dataReader["ProjectEigenaar"],
-                    ProjectBeschrijving = (string)dataReader["Beschrijving"],
-                    ProjectNaam = (string)dataReader["Naam"],
-                    ProjectDatum = (DateTime)dataReader["Datum"]
-                };
+                    command.Connection.Open();
+                    command.Parameters.AddWithValue("@id", projectID);
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            projectDTO = new()
+                            {
+                                ProjectID = (int)dataReader["ID"],
+                                GebruikerID = (int)dataReader["ProjectEigenaar"],
+                                ProjectBeschrijving = (string)dataReader["Beschrijving"],
+                                ProjectNaam = (string)dataReader["Naam"],
+                                ProjectDatum = (DateTime)dataReader["Datum"]
+                            };
+                        }
+                    }
+                }
             }
 
             return projectDTO;
