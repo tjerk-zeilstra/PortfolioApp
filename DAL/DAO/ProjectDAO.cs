@@ -27,9 +27,24 @@ namespace DAL.DAO
             throw new NotImplementedException();
         }
 
-        public int CreateProject(ProjectDTO Project)
+        public void CreateProject(ProjectDTO project)
         {
-            throw new NotImplementedException();
+            string query = "INSERT INTO dbo.Project([ProjectEigenaar],[Beschrijving],[Naam],[Datum]) VALUES(@eigenaar, @beschrijving, @naam, @datum)";
+
+            using(SqlConnection connection = new())
+            {
+                using (SqlCommand command = new(query, connection))
+                {
+                    command.Connection.Open();
+                    command.Parameters.AddWithValue("@eigenaar", project.GebruikerID);
+                    command.Parameters.AddWithValue("@beschrijving", project.ProjectBeschrijving);
+                    command.Parameters.AddWithValue("@naam", project.ProjectNaam);
+                    command.Parameters.AddWithValue("@datum", project.ProjectDatum);
+
+                    var id = (int)command.ExecuteScalar();
+                    project.ProjectID = id;
+                }
+            }
         }
 
         public void DeleteProject(ProjectDTO Project)
@@ -86,14 +101,6 @@ namespace DAL.DAO
             }
             return projectDTOs;
         }
-
-        //public List<ProjectDTO> GetAllProjecten()
-        //{
-        //    string query = "SELECT * FROM dbo.Project";
-        //    List<ProjectDTO> projectDTOs = new();
-
-        //    using(SqlCommand reader = )
-        //}
 
         public List<ExpertiseDTO> GetExpertises(int projectID)
         {

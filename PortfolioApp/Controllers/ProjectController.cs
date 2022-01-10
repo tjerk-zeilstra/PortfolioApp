@@ -56,6 +56,7 @@ namespace PortfolioApp.Controllers
         {
             try
             {
+
                 return RedirectToAction(nameof(Index));
             }
             catch

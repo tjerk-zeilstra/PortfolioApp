@@ -32,7 +32,7 @@ namespace Logic.Models
         public List<Expertise> Expertises { get; private set; }
         public List<ToDoItem> ToDoItems { get; private set; }
 
-        public int ProjectID { get; private set; }
+        public int ProjectID { get; set; }
         public int GebruikerID { get; set; }
         public string ProjectNaam { get; set; }
         public string ProjectBeschrijving { get; set; }

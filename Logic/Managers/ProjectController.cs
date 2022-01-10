@@ -32,5 +32,24 @@ namespace Logic.Managers
         {
             return new(_projectDAO, _projectDAO.GetProject(id));
         }
+
+        public Project AddProject(int gebID, string naam, string beschrijving, DateTime datum)
+        {
+            ProjectDTO projectDTO = new ProjectDTO()
+            {
+                GebruikerID = gebID,
+                ProjectNaam = naam,
+                ProjectBeschrijving = beschrijving,
+                ProjectDatum = datum
+            };
+            _projectDAO.CreateProject(projectDTO);
+            return new Project(_projectDAO) 
+            { 
+                ProjectID = projectDTO.GebruikerID,
+                ProjectNaam = projectDTO.ProjectNaam,
+                ProjectBeschrijving = projectDTO.ProjectBeschrijving,
+                ProjectDatum = projectDTO.ProjectDatum
+            };
+        }
     }
 }
