@@ -15,8 +15,6 @@ namespace PortfolioApp.Models
 
         public ProjectViewModel(Project project)
         {
-            LogicProject = project;
-
             ProjectID = project.ProjectID;
             GebruikerID = project.GebruikerID;
             ProjectNaam = project.ProjectNaam;
@@ -34,10 +32,8 @@ namespace PortfolioApp.Models
             //}
         }
 
-        public Project LogicProject { get; set; }
         public List<GebruikerViewModel> Gebruikers { get; private set; }
         public List<ExpertiseViewModel> Expertises { get; private set; }
-        //public List<ToDoItem> ToDoItems { get; private set; }
 
         public int ProjectID { get; private set; }
         public int GebruikerID { get; set; }

@@ -9,7 +9,7 @@ namespace DAOInterface.Interface
 {
     public interface IGebruikerDAO
     {
-        IList<GebruikerDTO> GetAllGebruikers();
+        List<GebruikerDTO> GetAllGebruikers();
         GebruikerDTO GetGebruiker(int id);
         GebruikerDTO EditGebruiker(GebruikerDTO gebruiker);
         GebruikerDTO AddGebruiker(GebruikerDTO gebruiker);

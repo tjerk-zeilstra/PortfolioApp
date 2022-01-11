@@ -47,14 +47,20 @@ namespace DAL.DAO
             }
         }
 
-        public void DeleteProject(ProjectDTO Project)
+        public void DeleteProject(int id)
         {
             string query = "DELETE FROM [dbo].[Project] WHERE [ID] = @id";
 
-            using SqlConnection connection = new(_connection);
-            using SqlCommand command = new(query, connection);
-            command.Parameters.AddWithValue("@id", Project.ProjectID);
-            command.ExecuteNonQuery();
+            using (SqlConnection connection = new(_connection))
+            {
+                using (SqlCommand command = new(query, connection))
+                {
+                    command.Connection.Open();
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
+            }
+            
         }
 
         public void EditProject(ProjectDTO Project)
@@ -63,7 +69,8 @@ namespace DAL.DAO
 
             using (SqlConnection connection = new(_connection))
             {
-                using (SqlCommand command = new(query, connection)) { 
+                using (SqlCommand command = new(query, connection)) {
+                    command.Connection.Open();
                     command.Parameters.AddWithValue("@eigenaar", Project.GebruikerID);
                     command.Parameters.AddWithValue("@beschrijving", Project.ProjectBeschrijving);
                     command.Parameters.AddWithValue("@name", Project.ProjectNaam);

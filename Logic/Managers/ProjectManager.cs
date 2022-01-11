@@ -12,9 +12,12 @@ namespace Logic.Managers
     public class ProjectManager
     {
         private readonly IProjectDAO _projectDAO;
-        public ProjectManager(IProjectDAO projectDAO)
+        private readonly IGebruikerDAO _gebruikerDAO;
+
+        public ProjectManager(IProjectDAO projectDAO, IGebruikerDAO gebruikerDAO)
         {
             _projectDAO = projectDAO;
+            _gebruikerDAO = gebruikerDAO;
         }
 
         public List<Project> GetAllProjects()
@@ -23,7 +26,7 @@ namespace Logic.Managers
             List<Project> projects = new();
             foreach (var item in projectDTOs)
             {
-                projects.Add(new(_projectDAO, item));
+                projects.Add(new(_projectDAO, _gebruikerDAO, item));
             }
             return projects;
         }
@@ -31,7 +34,7 @@ namespace Logic.Managers
         public Project GetProject(int id)
         {
             ProjectDTO projectDTO = _projectDAO.GetProject(id);
-            Project project = new(_projectDAO) {
+            Project project = new(_projectDAO, _gebruikerDAO) {
                 ProjectID = projectDTO.ProjectID,
                 GebruikerID = projectDTO.GebruikerID,
                 ProjectNaam = projectDTO.ProjectNaam,
@@ -43,7 +46,7 @@ namespace Logic.Managers
 
         public Project AddProject(int gebID, string naam, string beschrijving, DateTime datum)
         {
-            ProjectDTO projectDTO = new ProjectDTO()
+            ProjectDTO projectDTO = new()
             {
                 GebruikerID = gebID,
                 ProjectNaam = naam,
@@ -51,7 +54,7 @@ namespace Logic.Managers
                 ProjectDatum = datum
             };
             _projectDAO.CreateProject(projectDTO);
-            return new Project(_projectDAO) 
+            return new Project(_projectDAO, _gebruikerDAO) 
             { 
                 ProjectID = projectDTO.ProjectID,
                 GebruikerID = projectDTO.GebruikerID,
@@ -59,6 +62,11 @@ namespace Logic.Managers
                 ProjectBeschrijving = projectDTO.ProjectBeschrijving,
                 ProjectDatum = projectDTO.ProjectDatum
             };
+        }
+        
+        public void DelteProject(int id)
+        {
+            _projectDAO.DeleteProject(id);
         }
     }
 }

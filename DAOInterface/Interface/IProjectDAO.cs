@@ -15,7 +15,7 @@ namespace DAOInterface.Interface
         ProjectDTO GetProject(int projectID);
         void EditProject(ProjectDTO Project);
         void CreateProject(ProjectDTO project);
-        void DeleteProject(ProjectDTO Project);
+        void DeleteProject(int id);
 
         //Gebruikers
         List<GebruikerDTO> GetProjectGebruikers(int projectID);

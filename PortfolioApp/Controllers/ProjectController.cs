@@ -13,10 +13,12 @@ namespace PortfolioApp.Controllers
 {
     public class ProjectController : Controller
     {
-        readonly ProjectManager projectManager;
-        public ProjectController(IProjectDAO projectDAO)
+        private readonly ProjectManager projectManager;
+        private readonly int gebruikerID = 1;
+
+        public ProjectController(IProjectDAO projectDAO, IGebruikerDAO gebruikerDAO)
         {
-            projectManager = new(projectDAO);
+            projectManager = new(projectDAO, gebruikerDAO);
         }
 
         // GET: ProjectController
@@ -33,8 +35,8 @@ namespace PortfolioApp.Controllers
         // GET: ProjectController/Details/5
         public ActionResult Details(int id)
         {
-
-            return View();
+            ProjectViewModel viewModel = new(projectManager.GetProject(id));
+            return View(viewModel);
         }
 
         // GET: ProjectController/Create
@@ -77,7 +79,7 @@ namespace PortfolioApp.Controllers
                 project.Update(viewModel.GebruikerID, viewModel.ProjectNaam, viewModel.ProjectBeschrijving, viewModel.ProjectDatum);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }
@@ -86,16 +88,18 @@ namespace PortfolioApp.Controllers
         // GET: ProjectController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            ProjectViewModel viewModel = new(projectManager.GetProject(id));
+            return View(viewModel);
         }
 
         // POST: ProjectController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, [FromForm]ProjectViewModel viewModel)
         {
             try
             {
+                projectManager.DelteProject(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

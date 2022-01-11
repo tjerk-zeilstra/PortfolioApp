@@ -11,15 +11,18 @@ namespace Logic.Models
     public class Project
     {
         private readonly IProjectDAO _projectDAO;
+        private readonly IGebruikerDAO _gebruikerDAO;
 
-        public Project(IProjectDAO projectDAO)
+        public Project(IProjectDAO projectDAO, IGebruikerDAO gebruikerDAO)
         {
             _projectDAO = projectDAO;
+            _gebruikerDAO = gebruikerDAO;
         }
 
-        public Project(IProjectDAO projectDAO, ProjectDTO projectDTO)
+        public Project(IProjectDAO projectDAO, IGebruikerDAO gebruikerDAO, ProjectDTO projectDTO)
         {
             _projectDAO = projectDAO;
+            _gebruikerDAO = gebruikerDAO;
 
             ProjectID = projectDTO.ProjectID;
             GebruikerID = projectDTO.GebruikerID;
@@ -61,14 +64,7 @@ namespace Logic.Models
             Gebruikers.Clear();
             foreach (var gebDTO in gebruikerDTOs)
             {
-                Gebruikers.Add(new()
-                {
-                    GebruikerID = gebDTO.GebruikerID,
-                    Beschrijving = gebDTO.Beschrijving,
-                    Email = gebDTO.Email,
-                    Naam = gebDTO.Naam,
-                    ProfielFoto = gebDTO.ProfielFoto
-                });
+                Gebruikers.Add(new(_gebruikerDAO, gebDTO));
             }
         }
 

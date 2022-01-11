@@ -8,6 +8,10 @@ namespace PortfolioApp.Models
 {
     public class GebruikerViewModel
     {
+        public GebruikerViewModel()
+        {
+
+        }
         public GebruikerViewModel(Gebruiker gebruiker)
         {
             GebruikerID = gebruiker.GebruikerID;
