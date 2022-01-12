@@ -47,8 +47,7 @@ namespace Logic.Models
             ProjectNaam = naam;
             ProjectBeschrijving = beschrijving;
             ProjectDatum = datum;
-            _projectDAO.EditProject(new ProjectDTO()
-            {
+            _projectDAO.EditProject(new(){
                 ProjectID = ProjectID,
                 GebruikerID = gebruiker,
                 ProjectNaam = naam,

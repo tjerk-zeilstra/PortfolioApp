@@ -40,9 +40,9 @@ namespace PortfolioApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([FromForm]GebruikerViewModel viewModel)
         {
-            _gebruikerManager.AddGebruiker(viewModel.Beschrijving, viewModel.Naam, viewModel.Email, viewModel.ProfielFoto);
             try
             {
+                _gebruikerManager.AddGebruiker(viewModel.Beschrijving, viewModel.Naam, viewModel.Email, viewModel.ProfielFoto);
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception e)
@@ -51,22 +51,25 @@ namespace PortfolioApp.Controllers
             }
         }
 
-        // GET: GebruikerController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: GebruikerController/Edit
+        public ActionResult Edit()
         {
-            return View();
+            GebruikerViewModel gebruiker = new(_gebruikerManager.GetGebruiker(gebruikerID));
+            return View(gebruiker);
         }
 
-        // POST: GebruikerController/Edit/5
+        // POST: GebruikerController/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit([FromForm]GebruikerViewModel viewModel)
         {
             try
             {
+                Gebruiker gebruiker = _gebruikerManager.GetGebruiker(gebruikerID);
+                gebruiker.Update(viewModel.Naam, viewModel.Beschrijving, viewModel.Email, viewModel.ProfielFoto);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }
@@ -75,19 +78,21 @@ namespace PortfolioApp.Controllers
         // GET: GebruikerController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            GebruikerViewModel gebruiker = new(_gebruikerManager.GetGebruiker(id));
+            return View(gebruiker);
         }
 
         // POST: GebruikerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, [FromForm] GebruikerViewModel viewModel)
         {
             try
             {
+                _gebruikerManager.DeleteGebruiker(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }

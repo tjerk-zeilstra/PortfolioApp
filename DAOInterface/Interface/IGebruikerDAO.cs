@@ -11,8 +11,8 @@ namespace DAOInterface.Interface
     {
         List<GebruikerDTO> GetAllGebruikers();
         GebruikerDTO GetGebruiker(int id);
-        GebruikerDTO EditGebruiker(GebruikerDTO gebruiker);
+        void EditGebruiker(GebruikerDTO gebruiker);
         GebruikerDTO AddGebruiker(GebruikerDTO gebruiker);
-        void DeleteGebruiker(GebruikerDTO gebruiker);
+        void DeleteGebruiker(int id);
     }
 }

@@ -37,5 +37,10 @@ namespace Logic.Managers
             _gebruikerDAO.AddGebruiker(gebruikerDTO);
             return new(_gebruikerDAO, gebruikerDTO);
         }
+
+        public void DeleteGebruiker(int id)
+        {
+            _gebruikerDAO.DeleteGebruiker(id);
+        }
     }
 }

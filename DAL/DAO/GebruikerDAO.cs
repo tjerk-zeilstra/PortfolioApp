@@ -35,7 +35,7 @@ namespace DAL.DAO
                     }
                     else
                     {
-                        command.Parameters.AddWithValue("@ProfielFoto", "Img/default_img.png");
+                        command.Parameters.AddWithValue("@ProfielFoto", DBNull.Value);
                     }
 
                     var id = (int)command.ExecuteScalar();
@@ -43,40 +43,49 @@ namespace DAL.DAO
                 }
             }
 
-            //using (_connection)
-            //{
-            //    using (SqlCommand command = new(query, _connection))
-            //    {
-            //        command.Parameters.AddWithValue("@Naam", gebruiker.Naam);
-            //        command.Parameters.AddWithValue("@Email", gebruiker.Email);
-            //        command.Parameters.AddWithValue("@Beschrijving", gebruiker.Beschrijving);
-            //        if (gebruiker.ProfielFoto != null)
-            //        {
-            //            command.Parameters.AddWithValue("@ProfielFoto", gebruiker.ProfielFoto);
-            //        }
-            //        else
-            //        {
-            //            command.Parameters.AddWithValue("@ProfielFoto", "Img/default_img.png");
-            //        }
-
-            //        _connection.Open();
-            //        var modified = command.ExecuteScalar();
-            //        gebruiker.GebruikerID = (int)modified;
-            //    }
-            //}
-
             return gebruiker;
         }
 
-        public void DeleteGebruiker(GebruikerDTO gebruiker)
+        public void DeleteGebruiker(int id)
         {
-            string query = "DELETE FROM [dbo].[Gebruiker] WHERE [ID] == @id";
-            throw new NotImplementedException();
+            string query = "DELETE FROM [dbo].[Gebruiker] WHERE [ID] = @id";
+
+            using (SqlConnection connection = new(_connection))
+            {
+                using (SqlCommand command = new(query, connection))
+                {
+                    command.Connection.Open();
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
-        public GebruikerDTO EditGebruiker(GebruikerDTO gebruiker)
+        public void EditGebruiker(GebruikerDTO gebruiker)
         {
-            throw new NotImplementedException();
+            string query = "UPDATE [dbo].[Gebruiker] SET [Naam] = @naam ,[Beschrijving] = @beschrijving ,[Email] = @email ,[ProfielFoto] = @profielFoto WHERE [ID] = @id";
+
+            using (SqlConnection connection = new(_connection))
+            {
+                using (SqlCommand command = new(query, connection))
+                {
+                    command.Connection.Open();
+                    command.Parameters.AddWithValue("@id", gebruiker.GebruikerID);
+                    command.Parameters.AddWithValue("@naam", gebruiker.Naam);
+                    command.Parameters.AddWithValue("@email", gebruiker.Email);
+                    command.Parameters.AddWithValue("@beschrijving", gebruiker.Beschrijving);
+                    if (gebruiker.ProfielFoto != null)
+                    {
+                        command.Parameters.AddWithValue("@ProfielFoto", gebruiker.ProfielFoto);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@ProfielFoto", DBNull.Value);
+                    }
+
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
         public List<GebruikerDTO> GetAllGebruikers()

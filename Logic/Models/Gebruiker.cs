@@ -30,5 +30,20 @@ namespace Logic.Models
         public string Beschrijving { get; set; }
         public string Email { get; set; }
         public string ProfielFoto { get; set; }
+
+        public void Update(string naam, string beschrijving, string email, string profielfoto)
+        {
+            Naam = naam;
+            Beschrijving = beschrijving;
+            Email = email;
+            ProfielFoto = profielfoto;
+            _gebruikerDAO.EditGebruiker(new(){ 
+                GebruikerID = GebruikerID,
+                Naam = naam,
+                Beschrijving = beschrijving,
+                Email = email,
+                ProfielFoto = profielfoto
+            });
+        }
     }
 }
