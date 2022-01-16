@@ -16,9 +16,9 @@ namespace PortfolioApp.Controllers
         private readonly GebruikerManager _gebruikerManager;
         private readonly int gebruikerID = 1;
 
-        public GebruikerController(IGebruikerDAO gebruikerDAO)
+        public GebruikerController(GebruikerManager gebruikerManager)
         {
-            _gebruikerManager = new(gebruikerDAO);
+            _gebruikerManager = gebruikerManager;
         }
 
         // GET: GebruikerController

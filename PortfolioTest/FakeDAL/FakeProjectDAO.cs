@@ -10,117 +10,73 @@ namespace PortfolioTest.FakeDAL
 {
     public class FakeProjectDAO : IProjectDAO
     {
+
+        public int ID { get; set; }
+        public string Naam { get; set; }
+        public string Beschrijving { get; set; }
+        public DateTime Datum { get; set; }
+
         public void AddExpertise(int expertiseID)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void AddGebruiker(int gebruiker)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void CreateProject(ProjectDTO Project)
         {
-            Project.ProjectID = 1;
+            throw new NotImplementedException();
         }
 
-        public void DeleteProject(ProjectDTO Project)
+        public void DeleteProject(int id)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void EditProject(ProjectDTO Project)
         {
-            
+            ID = Project.ProjectID;
+            Naam = Project.ProjectNaam;
+            Beschrijving = Project.ProjectBeschrijving;
+            Datum = Project.ProjectDatum;
         }
 
         public List<ProjectDTO> GetAllProjecten()
         {
-            List<ProjectDTO> projectDTOs = new();
-            for (int i = 0; i < 2; i++)
-            {
-                projectDTOs.Add(new()
-                {
-                    ProjectID = i,
-                    GebruikerID = 1,
-                    ProjectBeschrijving = "test " + i,
-                    ProjectDatum = new DateTime(),
-                    ProjectNaam = "test " + i
-                });
-            }
-            return projectDTOs;
+            throw new NotImplementedException();
         }
 
         public List<ExpertiseDTO> GetExpertises(int projectID)
         {
-            List<ExpertiseDTO> expertiseDTOs = new();
-            for (int i = 0; i < 2; i++)
-            {
-                expertiseDTOs.Add(new()
-                {
-                    ID = i,
-                    Beschrijving = "test " + 1,
-                    Name = "test " + 1
-                });
-            }
-            return expertiseDTOs;
+            throw new NotImplementedException();
         }
 
         public ProjectDTO GetProject(int projectID)
         {
-            return new ProjectDTO()
-            {
-                ProjectID = projectID,
-                GebruikerID = 1,
-                ProjectBeschrijving = "test",
-                ProjectDatum = new DateTime(),
-                ProjectNaam = "test"
-            };
+            throw new NotImplementedException();
         }
 
         public List<GebruikerDTO> GetProjectGebruikers(int projectID)
         {
-            List<GebruikerDTO> gebruikerDTOs = new();
-            for (int i = 0; i < 2; i++)
-            {
-                gebruikerDTOs.Add(new()
-                {
-                    GebruikerID = i,
-                    Beschrijving = "test",
-                    Email = "mail",
-                    Naam = "naam",
-                    ProfielFoto = "foto"
-                });
-            }
-            return gebruikerDTOs;
+            throw new NotImplementedException();
         }
 
         public List<ProjectDTO> GetProjectsFromUser(int userID)
         {
-            List<ProjectDTO> projectDTOs = new();
-            for (int i = 0; i < 2; i++)
-            {
-                projectDTOs.Add(new()
-                {
-                    ProjectID = i,
-                    GebruikerID = userID,
-                    ProjectBeschrijving = "test " + i,
-                    ProjectDatum = new DateTime(),
-                    ProjectNaam = "test " + i
-                });
-            }
-            return projectDTOs;
+            throw new NotImplementedException();
         }
 
         public void RemoveExpertise(int expertiseID, int projectID)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void RemoveGebruiker(int gebruikerID, int projectID)
         {
-            
+            throw new NotImplementedException();
         }
     }
 }

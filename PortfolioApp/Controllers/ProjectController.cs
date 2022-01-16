@@ -13,19 +13,19 @@ namespace PortfolioApp.Controllers
 {
     public class ProjectController : Controller
     {
-        private readonly ProjectManager projectManager;
+        private readonly ProjectManager _projectManager;
         private readonly int gebruikerID = 1;
 
-        public ProjectController(IProjectDAO projectDAO, IGebruikerDAO gebruikerDAO)
+        public ProjectController(ProjectManager projectManager)
         {
-            projectManager = new(projectDAO, gebruikerDAO);
+            _projectManager = projectManager;
         }
 
         // GET: ProjectController
         public ActionResult Index()
         {
             List<ProjectViewModel> models = new();
-            foreach (var project in projectManager.GetAllProjects())
+            foreach (var project in _projectManager.GetAllProjects())
             {
                 models.Add(new(project));
             }
@@ -35,7 +35,7 @@ namespace PortfolioApp.Controllers
         // GET: ProjectController/Details/5
         public ActionResult Details(int id)
         {
-            ProjectViewModel viewModel = new(projectManager.GetProject(id));
+            ProjectViewModel viewModel = new(_projectManager.GetProject(id));
             return View(viewModel);
         }
 
@@ -52,7 +52,7 @@ namespace PortfolioApp.Controllers
         {
             try
             {
-                projectManager.AddProject(viewModel.GebruikerID, viewModel.ProjectNaam, viewModel.ProjectBeschrijving, viewModel.ProjectDatum);
+                _projectManager.AddProject(viewModel.GebruikerID, viewModel.ProjectNaam, viewModel.ProjectBeschrijving, viewModel.ProjectDatum);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -64,7 +64,7 @@ namespace PortfolioApp.Controllers
         // GET: ProjectController/Edit/5
         public ActionResult Edit(int id)
         {
-            ProjectViewModel viewModel = new(projectManager.GetProject(id));
+            ProjectViewModel viewModel = new(_projectManager.GetProject(id));
             return View(viewModel);
         }
 
@@ -75,7 +75,7 @@ namespace PortfolioApp.Controllers
         {
             try
             {
-                Project project = projectManager.GetProject(id);
+                Project project = _projectManager.GetProject(id);
                 project.Update(viewModel.GebruikerID, viewModel.ProjectNaam, viewModel.ProjectBeschrijving, viewModel.ProjectDatum);
                 return RedirectToAction(nameof(Index));
             }
@@ -88,7 +88,7 @@ namespace PortfolioApp.Controllers
         // GET: ProjectController/Delete/5
         public ActionResult Delete(int id)
         {
-            ProjectViewModel viewModel = new(projectManager.GetProject(id));
+            ProjectViewModel viewModel = new(_projectManager.GetProject(id));
             return View(viewModel);
         }
 
@@ -99,7 +99,7 @@ namespace PortfolioApp.Controllers
         {
             try
             {
-                projectManager.DelteProject(id);
+                _projectManager.DelteProject(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

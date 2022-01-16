@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Logic.Managers;
 
 namespace PortfolioApp
 {
@@ -28,14 +29,11 @@ namespace PortfolioApp
             services.AddControllersWithViews();
 
             //depenency injection
-            //services.AddSingleton<IProjectDAO, ProjectDAO>();
             services.AddScoped<IProjectDAO, ProjectDAO>();
-            //services.AddScoped(typeof(IProjectDAO), typeof(ProjectDAO));
             services.AddScoped<IGebruikerDAO, GebruikerDAO>();
-            //services.AddScoped(typeof(IGebruikerDAO), typeof(GebruikerDAO));
             services.AddScoped<IExpertiseDOA, ExpertiseDAO>();
-            //services.AddScoped(typeof(IExpertiseDOA), typeof(ExpertiseDAO));
-
+            services.AddScoped<GebruikerManager>();
+            services.AddScoped<ProjectManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

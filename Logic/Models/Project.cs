@@ -81,9 +81,9 @@ namespace Logic.Models
         }
 
         //Expertises
-        public List<ExpertiseDTO> GetProjectExpertise(Expertise expertise)
+        public List<ExpertiseDTO> GetProjectExpertise()
         {
-            List<ExpertiseDTO> expertiseDTOs = _projectDAO.GetExpertises(expertise.ID);
+            List<ExpertiseDTO> expertiseDTOs = _projectDAO.GetExpertises(ProjectID);
             foreach (var expDTO in expertiseDTOs)
             {
                 expertiseDTOs.Add(new()
