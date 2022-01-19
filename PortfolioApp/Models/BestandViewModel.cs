@@ -8,6 +8,7 @@ namespace PortfolioApp.Models
 {
     public class BestandViewModel
     {
+        public ProjectViewModel Project { get; set; }
         public IFormFile Bestand { set; get; }
     }
 }

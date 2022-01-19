@@ -26,5 +26,10 @@ namespace DAOInterface.Interface
         List<ExpertiseDTO> GetExpertises(int projectID);
         void AddExpertise(int expertiseID);
         void RemoveExpertise(int expertiseID, int projectID);
+
+        //bestanden
+        List<BestandDTO> GetBestanden(int projectID);
+        void AddBestand(BestandDTO bestand, int projectID);
+        void RemoveBestanden(int bestandsID, int projectID);
     }
 }

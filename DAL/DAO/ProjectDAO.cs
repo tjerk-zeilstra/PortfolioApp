@@ -17,21 +17,12 @@ namespace DAL.DAO
             _connection = "Server=DESKTOP-N7U3HV7;Database=portfolio;Trusted_Connection=True;";
         }
 
-        public void AddExpertise(int expertiseID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddGebruiker(int gebruiker)
-        {
-            throw new NotImplementedException();
-        }
-
+        #region Project
         public void CreateProject(ProjectDTO project)
         {
             string query = "INSERT INTO dbo.Project([ProjectEigenaar],[Beschrijving],[Naam],[Datum]) VALUES(@eigenaar, @beschrijving, @naam, @datum)" + "SELECT CAST(scope_identity() AS int)";
 
-            using(SqlConnection connection = new(_connection))
+            using (SqlConnection connection = new(_connection))
             {
                 using (SqlCommand command = new(query, connection))
                 {
@@ -60,7 +51,7 @@ namespace DAL.DAO
                     command.ExecuteNonQuery();
                 }
             }
-            
+
         }
 
         public void EditProject(ProjectDTO Project)
@@ -69,7 +60,8 @@ namespace DAL.DAO
 
             using (SqlConnection connection = new(_connection))
             {
-                using (SqlCommand command = new(query, connection)) {
+                using (SqlCommand command = new(query, connection))
+                {
                     command.Connection.Open();
                     command.Parameters.AddWithValue("@eigenaar", Project.GebruikerID);
                     command.Parameters.AddWithValue("@beschrijving", Project.ProjectBeschrijving);
@@ -112,11 +104,6 @@ namespace DAL.DAO
             return projectDTOs;
         }
 
-        public List<ExpertiseDTO> GetExpertises(int projectID)
-        {
-            throw new NotImplementedException();
-        }
-
         public ProjectDTO GetProject(int projectID)
         {
             string query = "SELECT * FROM [dbo].[Project] WHERE [ID] = @id";
@@ -149,12 +136,90 @@ namespace DAL.DAO
             return projectDTO;
         }
 
+        public List<ProjectDTO> GetProjectsFromUser(int userID)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Gebruiker
+
         public List<GebruikerDTO> GetProjectGebruikers(int projectID)
         {
             throw new NotImplementedException();
         }
 
-        public List<ProjectDTO> GetProjectsFromUser(int userID)
+        public void AddGebruiker(int gebruiker)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveGebruiker(int gebruikerID, int projectID)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Bestanden
+        public void RemoveBestanden(int bestandsID, int projectID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddBestand(BestandDTO bestand, int projectID)
+        {
+            string query = "INSERT INTO dbo.Bestand([Locatie]) VALUES(@locatie)" + "SELECT CAST(scope_identity() AS int)";
+            string junctionQuery = "INSERT INTO [dbo].[Project_Bestand] ([BestandID],[ProjectID]) VALUES(@bestandID, @projectID)";
+
+            using (SqlConnection connection = new(_connection))
+            {
+                using (SqlCommand command = new(query, connection))
+                {
+                    command.Connection.Open();
+                    //make table
+                    command.Parameters.AddWithValue("@locatie", bestand.BestandsLocatie);
+                    var id = (int)command.ExecuteScalar();
+                    bestand.ID = id;
+                    //add to juncitonTable
+                    command.CommandText = junctionQuery;
+                    command.Parameters.AddWithValue("@bestandID", id);
+                    command.Parameters.AddWithValue("@projectID", projectID);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<BestandDTO> GetBestanden(int projectID)
+        {
+            string query = "SELECT Bestand.ID, Bestand.Locatie, Project.Naam FROM (Bestand INNER JOIN Project_Bestand on Bestand.ID = Project_Bestand.BestandID INNER JOIN Project on Project.ID = Project_Bestand.ProjectID) WHERE Project.ID = @id";
+            List<BestandDTO> bestandDTOs = new();
+
+            using (SqlConnection connection = new(_connection))
+            {
+                using (SqlCommand command = new(query, connection))
+                {
+                    command.Connection.Open();
+                    command.Parameters.AddWithValue("@id", projectID);
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            bestandDTOs.Add(new BestandDTO()
+                            {
+                                ID = (int)dataReader["ID"],
+                                BestandsLocatie = (string)dataReader["Locatie"]
+                            });
+                        }
+                    }
+                }
+            }
+            return bestandDTOs;
+        }
+        #endregion
+
+        #region Expertise
+        public List<ExpertiseDTO> GetExpertises(int projectID)
         {
             throw new NotImplementedException();
         }
@@ -164,9 +229,10 @@ namespace DAL.DAO
             throw new NotImplementedException();
         }
 
-        public void RemoveGebruiker(int gebruikerID, int projectID)
+        public void AddExpertise(int expertiseID)
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

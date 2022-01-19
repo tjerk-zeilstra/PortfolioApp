@@ -34,6 +34,7 @@ namespace Logic.Models
         public List<Gebruiker> Gebruikers { get; private set; }
         public List<Expertise> Expertises { get; private set; }
         public List<ToDoItem> ToDoItems { get; private set; }
+        public List<Bestand> Bestanden { get; private set; }
 
         public int ProjectID { get; set; }
         public int GebruikerID { get; set; }
@@ -78,6 +79,35 @@ namespace Logic.Models
         {
             _projectDAO.RemoveGebruiker(gebruiker.GebruikerID, ProjectID);
             Gebruikers.Remove(gebruiker);
+        }
+
+        //Bestanden
+        public void GetBestanden()
+        {
+            List<Bestand> bestanden = new();
+            List<BestandDTO> bestandDTOs = _projectDAO.GetBestanden(ProjectID);
+            foreach (var bestandDTO in bestandDTOs)
+            {
+                Bestand bestand = new();
+                bestand.BestandsLocatie = bestandDTO.BestandsLocatie;
+                bestand.ID = bestandDTO.ID;
+                bestanden.Add(bestand);
+            }
+            Bestanden = bestanden;
+        }
+
+        public void AddBestand(Bestand bestand)
+        {
+            BestandDTO dto = new BestandDTO()
+            {
+                BestandsLocatie = bestand.BestandsLocatie
+            };
+            _projectDAO.AddBestand(dto, ProjectID);
+        }
+
+        public void RemoveBestanden(Bestand bestand)
+        {
+            _projectDAO.RemoveBestanden(bestand.ID, ProjectID);
         }
 
         //Expertises

@@ -35,7 +35,10 @@ namespace PortfolioApp.Controllers
         // GET: ProjectController/Details/5
         public ActionResult Details(int id)
         {
-            ProjectViewModel viewModel = new(_projectManager.GetProject(id));
+            Project project = _projectManager.GetProject(id);
+            project.GetBestanden();
+
+            ProjectViewModel viewModel = new(project);
             return View(viewModel);
         }
 
