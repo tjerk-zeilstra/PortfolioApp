@@ -38,9 +38,10 @@
 
     @foreach (var item in Model.Bestanden)
     {
-        <h1>@item.BestandsLocatie</h1>
-        <img src="~/bestanden/@Model.GebruikerID/@Model.ProjectNaam/@item.BestandsLocatie" alt="my img" />
-        @Html.ActionLink("Delete", "Delete", "Bestand", new { projectID = Model.ProjectID, bestandID = item.ID })
+        <div class="row">
+            <img src="~/bestanden/@Model.GebruikerID/@item.BestandsLocatie" alt="my img" width="500" />
+            @Html.ActionLink("Delete", "Delete", "Bestand", new { projectID = Model.ProjectID, bestandID = item.ID })
+        </div>
     }
 </div>
 

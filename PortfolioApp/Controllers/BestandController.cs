@@ -43,7 +43,7 @@ namespace PortfolioApp.Controllers
             if (Bestand != null)
             {
                 string bestandsnaam = GenerateUniqueFileName(Bestand.FileName);
-                string folder = Path.Combine(_webHostEnvironment.WebRootPath, "bestanden\\" + project.GebruikerID + "\\" + project.ProjectNaam);
+                string folder = Path.Combine(_webHostEnvironment.WebRootPath, "bestanden\\" + project.GebruikerID);
                 string path = Path.Combine(folder, bestandsnaam);
                 if (!Directory.Exists(folder))
                 {
