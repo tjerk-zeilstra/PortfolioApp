@@ -105,9 +105,9 @@ namespace Logic.Models
             _projectDAO.AddBestand(dto, ProjectID);
         }
 
-        public void RemoveBestanden(Bestand bestand)
+        public void RemoveBestanden(int bestandID)
         {
-            _projectDAO.RemoveBestanden(bestand.ID, ProjectID);
+            _projectDAO.RemoveBestanden(bestandID, ProjectID);
         }
 
         //Expertises

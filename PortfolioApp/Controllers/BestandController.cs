@@ -40,8 +40,6 @@ namespace PortfolioApp.Controllers
         public ActionResult Create(int id, IFormFile Bestand)
         {
             Project project = _projectManager.GetProject(id);
-            //var viewModel = collection.ContainsKey("Bestand");
-            //var bestand = collection["Bestand"];
             if (Bestand != null)
             {
                 string bestandsnaam = GenerateUniqueFileName(Bestand.FileName);
@@ -61,16 +59,18 @@ namespace PortfolioApp.Controllers
             return RedirectToAction("Details", "Project", new { id});
         }
 
-        private string GenerateUniqueFileName(string filename)
+        private static string GenerateUniqueFileName(string filename)
         {
             string NoExtension = Path.GetFileNameWithoutExtension(filename);
             string returnName = NoExtension + DateTime.Now.Ticks + Path.GetExtension(filename);
             return returnName;
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int projectID, int bestandID)
         {
-            return View();
+            Project project = _projectManager.GetProject(projectID);
+            project.RemoveBestanden(bestandID);
+            return RedirectToAction("Details", "Project", new { id = projectID });
         }
     }
 }

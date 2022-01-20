@@ -164,7 +164,24 @@ namespace DAL.DAO
         #region Bestanden
         public void RemoveBestanden(int bestandsID, int projectID)
         {
-            throw new NotImplementedException();
+            string query = "DELETE FROM [dbo].[Bestand] WHERE [ID] = @id";
+            string junctionQuery = "DELETE FROM [dbo].[Project_Bestand] WHERE [BestandID] = @bestandID and [ProjectID] = @projectID";
+
+            using (SqlConnection connection = new(_connection))
+            {
+                using (SqlCommand command = new(junctionQuery, connection))
+                {
+                    command.Connection.Open();
+                    //remove record junction table
+                    command.Parameters.AddWithValue("@bestandID", bestandsID);
+                    command.Parameters.AddWithValue("@projectID", projectID);
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = query;
+                    command.Parameters.AddWithValue("@id", bestandsID);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
         public void AddBestand(BestandDTO bestand, int projectID)

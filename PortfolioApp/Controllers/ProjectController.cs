@@ -53,9 +53,10 @@ namespace PortfolioApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([FromForm]ProjectViewModel viewModel)
         {
+            _projectManager.AddProject(gebruikerID, viewModel.ProjectNaam, viewModel.ProjectBeschrijving, viewModel.ProjectDatum);
             try
             {
-                _projectManager.AddProject(viewModel.GebruikerID, viewModel.ProjectNaam, viewModel.ProjectBeschrijving, viewModel.ProjectDatum);
+                
                 return RedirectToAction(nameof(Index));
             }
             catch

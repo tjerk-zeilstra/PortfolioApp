@@ -26,7 +26,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Back to project", "Details", "Project", new { id = Model.Project.ProjectID })
 </div>
 
 @section Scripts {

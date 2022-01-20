@@ -4,24 +4,12 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>@Model.ProjectNaam</h1>
 
 <div>
-    <h4>ProjectViewModel</h4>
+    <h4>@Model.ProjectBeschrijving</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProjectID)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProjectID)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.GebruikerID)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.GebruikerID)
-        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ProjectNaam)
         </dt>
@@ -41,14 +29,18 @@
             @Html.DisplayFor(model => model.ProjectDatum)
         </dd>
     </dl>
-    <a class="nav-link text-dark" asp-area="" asp-controller="Bestand" asp-action="Create">AddBestand</a>
+
+    <div>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectID }) |
+        @Html.ActionLink("Add bestand", "Create", "Bestand", new { id = Model.ProjectID }) |
+        <a asp-action="Index">Back to List</a>
+    </div>
+
     @foreach (var item in Model.Bestanden)
     {
-        <p>@item.BestandsLocatie</p>
+        <h1>@item.BestandsLocatie</h1>
+        <img src="~/bestanden/@Model.GebruikerID/@Model.ProjectNaam/@item.BestandsLocatie" alt="my img" />
+        @Html.ActionLink("Delete", "Delete", "Bestand", new { projectID = Model.ProjectID, bestandID = item.ID })
     }
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectID }) |
-    @Html.ActionLink("Add bestand", "Create", "Bestand",  new { id = Model.ProjectID }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+
