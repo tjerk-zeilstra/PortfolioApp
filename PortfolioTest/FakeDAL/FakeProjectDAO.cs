@@ -16,6 +16,11 @@ namespace PortfolioTest.FakeDAL
         public string Beschrijving { get; set; }
         public DateTime Datum { get; set; }
 
+        public void AddBestand(BestandDTO bestand, int projectID)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AddExpertise(int expertiseID)
         {
             throw new NotImplementedException();
@@ -49,6 +54,11 @@ namespace PortfolioTest.FakeDAL
             throw new NotImplementedException();
         }
 
+        public List<BestandDTO> GetBestanden(int projectID)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<ExpertiseDTO> GetExpertises(int projectID)
         {
             throw new NotImplementedException();
@@ -65,6 +75,11 @@ namespace PortfolioTest.FakeDAL
         }
 
         public List<ProjectDTO> GetProjectsFromUser(int userID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveBestanden(int bestandsID, int projectID)
         {
             throw new NotImplementedException();
         }
